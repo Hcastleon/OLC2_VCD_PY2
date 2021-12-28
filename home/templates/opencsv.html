@@ -1,0 +1,13 @@
+{% extends 'index.html'%}
+
+{% block content %}
+<form action="archivos" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="formFile" class="form-label">File input </label>
+        <input class="form-control" type="file" name="formFile" id="formFile" class="btn btn-outline-light"  accept=".xls,.xlsx,.csv,.json">
+    </div>
+    <button type="submit" class="btn btn-outline-light" style="background-color:  #73c6b6;">Submit</button>
+</form>
+{% endblock %}
+
