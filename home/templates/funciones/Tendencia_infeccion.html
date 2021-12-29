@@ -1,8 +1,51 @@
 {% extends 'index.html'%}
 {% block funcion %}
 <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Pais</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row align-items-start">
+      <div class="col">
+        <label for="exampleFormControlInput1" class="form-label">Campo a obtener el pais</label>
+      </div>
+    </div>
+    <div class="row align-items-start">
+      <div class="col">
+        <div class="btn-group dropstart" role="group" aria-label="Button group with nested dropdown">
+        <select class="form-select" name="camposelect" aria-label="Pais">
+          <option selected>Campo</option>
+          {% for i in cabecera %}
+          <option value="{{i}}">{{i}}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-outline-secondary"> Aceptar </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row align-items-start">
+      <div class="col">
+        <label for="exampleFormControlInput1" class="form-label">Pais</label>
+        <select class="form-select" name="paisselect" aria-label="Pais">
+          <option selected>Pais</option>
+          {% for i in pais %}
+          <option value="{{i}}">{{i}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <label for="exampleFormControlInput1" class="form-label">Pais</label>
+        <select class="form-select" name="tendenciaselect" aria-label="Pais">
+          <option selected>Campo</option>
+          {% for i in cabecera %}
+          <option value="{{i}}">{{i}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </form>
   </div>
   <div class="mb-3">
     <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>

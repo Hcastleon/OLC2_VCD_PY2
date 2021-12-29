@@ -19,7 +19,7 @@
               </tr>
             </thead>
             <tbody>
-            {% for i in contenido %}
+            {% for i in contenido|slice:":60" %}
               <tr>
                {% for j in i.values %}
                 <td>{{j}}</td>
