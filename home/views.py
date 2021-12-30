@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from django.contrib import messages
+
 import pathlib
 import logging
 import csv
 
+from home.funciones.tendencias.Tendencia1 import analisis
+
 archivo = None
 encabezados = []
 diccionario = []
+temporal = None
 
 # Create your views here.
 def home(request):
@@ -49,18 +53,20 @@ def funcion_1(request):
         logger.info(request.POST)
         pais_select = request.POST.get('camposelect','')
         pais = request.POST.get('paisselect','')
-        tenden = request.POST.get('tendenciaselect','')
+        tenind = request.POST.get('ten_independiente','')
+        tenden = request.POST.get('ten_dependiente','')
         if pais_select != '' :
+            global temporal
+            temporal = pais_select
             for i in diccionario:
                 for j in i:
                     if j == pais_select:
                         if not(i[j] in seleccionados):
                             seleccionados.append(i[j])
-            return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados, 'pais': seleccionados})
+            return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':''})
         else:
-            if pais != '' and tenden != '' :
-                print(pais)
-                print(tenden)
-
+            if pais != '' and tenden != '' and tenind!='' and temporal != None:
+                grafica =analisis(pais,tenind,tenden,diccionario,temporal)
+            return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica})
     else:
-        return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados})
+        return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados,'graph':''})
