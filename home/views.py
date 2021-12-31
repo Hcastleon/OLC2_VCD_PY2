@@ -4,14 +4,19 @@ from django.contrib import messages
 import pathlib
 import logging
 import csv
+import json
 
-from home.funciones.tendencias.Tendencia1 import analisis
+import pandas as pd
+from home.funciones.predicciones.prediccion1 import analisis2_p, analisis_p
+
+from home.funciones.tendencias.Tendencia1 import analisis, analisis2
 from home.reports import reporte_tendencia1
 
 archivo = None
 encabezados = []
 diccionario = []
 temporal = None
+temporal2 = None
 grafica = None
 # Create your views here.
 def home(request):
@@ -37,11 +42,13 @@ def archivo(request):
                 diccionario.append(row)
             encabezados = diccionario[0].keys()
         elif pathlib.Path(nombrecito).suffix == '.xls' or pathlib.Path(nombrecito).suffix == '.xlsx':
-            print('es un excel')
+            aux = pd.read_excel(archivo)
+            diccionario = aux.to_dict('records')
+            encabezados = diccionario[0].keys()
         elif pathlib.Path(nombrecito).suffix == '.json':
-            print('es un json')
+            diccionario = json.load(archivo)
+            encabezados = diccionario[0].keys()
         else:
-            print('no se acepta ese tipo de data')
             messages.error(request, f"Cannot parse data with {pathlib.Path(nombrecito).suffix} file type")
             return render(request,'opencsv.html')
     messages.success(request, "The file was uploaded successfully")
@@ -77,3 +84,210 @@ def funcion_1(request):
             return reporte_tendencia1('TICovid19_Pais.pdf',grafica['graficas'],grafica)
         else:
             return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados,'graph':''})
+
+def funcion_2(request):
+    seleccionados = []
+    global grafica
+    if request.method == 'POST':
+        logger = logging.getLogger('degub')
+        logger.info(request.POST)
+        pais_select = request.POST.get('camposelect','')
+        pais = request.POST.get('paisselect','')
+        tenind = request.POST.get('ten_independiente','')
+        tenden = request.POST.get('ten_dependiente','')
+        if pais_select != '' :
+            global temporal
+            temporal = pais_select
+            for i in diccionario:
+                for j in i:
+                    if j == pais_select:
+                        if not(i[j] in seleccionados):
+                            seleccionados.append(i[j])
+            return render(request,'funciones/Tendencia_infeccion_dia.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':''})
+        else:
+            if pais != '' and tenden != '' and tenind!='' and temporal != None:
+                grafica =analisis(pais,tenind,tenden,diccionario,temporal)
+            return render(request,'funciones/Tendencia_infeccion_dia.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado']})
+    elif request.method == 'GET':
+        logger = logging.getLogger('degub')
+        logger.info(request.GET)
+        if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
+            return reporte_tendencia1('TICovid19_Pais.pdf',grafica['graficas'],grafica)
+        else:
+            return render(request,'funciones/Tendencia_infeccion_dia.html',{'cabecera':encabezados,'graph':''})
+
+def funcion_3(request):
+    seleccionados = []
+    global grafica
+    if request.method == 'POST':
+        logger = logging.getLogger('degub')
+        logger.info(request.POST)
+        pais_select = request.POST.get('camposelect','')
+        pais = request.POST.get('paisselect','')
+        tenind = request.POST.get('ten_independiente','')
+        tenden = request.POST.get('ten_dependiente','')
+        if pais_select != '' :
+            global temporal
+            temporal = pais_select
+            for i in diccionario:
+                for j in i:
+                    if j == pais_select:
+                        if not(i[j] in seleccionados):
+                            seleccionados.append(i[j])
+            return render(request,'funciones/Tendencia_vacunacion.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':''})
+        else:
+            if pais != '' and tenden != '' and tenind!='' and temporal != None:
+                grafica =analisis(pais,tenind,tenden,diccionario,temporal)
+            return render(request,'funciones/Tendencia_vacunacion.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado']})
+    elif request.method == 'GET':
+        logger = logging.getLogger('degub')
+        logger.info(request.GET)
+        if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
+            return reporte_tendencia1('TICovid19_Pais.pdf',grafica['graficas'],grafica)
+        else:
+            return render(request,'funciones/Tendencia_vacunacion.html',{'cabecera':encabezados,'graph':''})
+
+def funcion_4(request):
+    seleccionados = []
+    seleccionados2 = []
+    global grafica
+    if request.method == 'POST':
+        logger = logging.getLogger('degub')
+        logger.info(request.POST)
+        pais_select = request.POST.get('camposelect1','')
+        depa_select = request.POST.get('camposelect2','')
+        pais = request.POST.get('paisselect','')
+        depa = request.POST.get('depaselect','')
+        tenind = request.POST.get('ten_independiente','')
+        tenden = request.POST.get('ten_dependiente','')
+        if pais_select != '' and depa_select != '' :
+            global temporal, temporal2
+            temporal = pais_select
+            temporal2 = depa_select
+            for i in diccionario:
+                for j in i:
+                    if j == pais_select:
+                        if not(i[j] in seleccionados):
+                            seleccionados.append(i[j])
+            for i in diccionario:
+                for j in i:
+                    if j == depa_select:
+                        if not(i[j] in seleccionados2):
+                            seleccionados2.append(i[j])
+            return render(request,'funciones/Tendencia_casos.html',{'cabecera':encabezados, 'pais': seleccionados, 'depa': seleccionados2,'graph':''})
+        else:
+            if depa != '' and pais != '' and tenden != '' and tenind!='' and temporal != None:
+                grafica =analisis2(pais,depa,tenind,tenden,diccionario,temporal,temporal2)
+            return render(request,'funciones/Tendencia_casos.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado']})
+    elif request.method == 'GET':
+        logger = logging.getLogger('degub')
+        logger.info(request.GET)
+        if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
+            return reporte_tendencia1('TICovid19_Pais.pdf',grafica['graficas'],grafica)
+        else:
+            return render(request,'funciones/Tendencia_casos.html',{'cabecera':encabezados,'graph':''})
+
+def funcion_5(request):
+    seleccionados = []
+    global grafica
+    if request.method == 'POST':
+        logger = logging.getLogger('degub')
+        logger.info(request.POST)
+        pais_select = request.POST.get('camposelect','')
+        pais = request.POST.get('paisselect','')
+        tenind = request.POST.get('ten_independiente','')
+        tenden = request.POST.get('ten_dependiente','')
+        regresion = request.POST.get('dato_regresion','')
+        if pais_select != '':
+            global temporal
+            temporal = pais_select
+            for i in diccionario:
+                for j in i:
+                    if j == pais_select:
+                        if not(i[j] in seleccionados):
+                            seleccionados.append(i[j])
+            return render(request,'funciones/Prediccion_infectados.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':''})
+        else:
+            if  pais != '' and tenden != '' and tenind!='' and temporal != None and regresion!='':
+                grafica =analisis_p(pais,tenind,tenden,regresion,diccionario,temporal)
+            return render(request,'funciones/Prediccion_infectados.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado'],'result':grafica['resultado']})
+    elif request.method == 'GET':
+        logger = logging.getLogger('degub')
+        logger.info(request.GET)
+        if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
+            return reporte_tendencia1('TICovid19_Pais.pdf',grafica['graficas'],grafica)
+        else:
+            return render(request,'funciones/Prediccion_infectados.html',{'cabecera':encabezados,'graph':''})
+
+def funcion_6(request):
+    seleccionados = []
+    seleccionados2 = []
+    global grafica
+    if request.method == 'POST':
+        logger = logging.getLogger('degub')
+        logger.info(request.POST)
+        pais_select = request.POST.get('camposelect1','')
+        depa_select = request.POST.get('camposelect2','')
+        pais = request.POST.get('paisselect','')
+        depa = request.POST.get('depaselect','')
+        tenind = request.POST.get('ten_independiente','')
+        tenden = request.POST.get('ten_dependiente','')
+        regresion = request.POST.get('dato_regresion','')
+        if pais_select != '' and depa_select != '' :
+            global temporal, temporal2
+            temporal = pais_select
+            temporal2 = depa_select
+            for i in diccionario:
+                for j in i:
+                    if j == pais_select:
+                        if not(i[j] in seleccionados):
+                            seleccionados.append(i[j])
+            for i in diccionario:
+                for j in i:
+                    if j == depa_select:
+                        if not(i[j] in seleccionados2):
+                            seleccionados2.append(i[j])
+            return render(request,'funciones/Prediccion_muertes_depa.html',{'cabecera':encabezados, 'pais': seleccionados, 'depa': seleccionados2,'graph':''})
+        else:
+            if depa != '' and pais != '' and tenden != '' and tenind!='' and temporal != None and regresion!='':
+                grafica =analisis2_p(pais,depa,tenind,tenden,regresion,diccionario,temporal,temporal2)
+            return render(request,'funciones/Prediccion_muertes_depa.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado'],'result':grafica['resultado']})
+    elif request.method == 'GET':
+        logger = logging.getLogger('degub')
+        logger.info(request.GET)
+        if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
+            return reporte_tendencia1('TICovid19_Pais.pdf',grafica['graficas'],grafica)
+        else:
+            return render(request,'funciones/Prediccion_muertes_depa.html',{'cabecera':encabezados,'graph':''})
+
+def funcion_7(request):
+    seleccionados = []
+    global grafica
+    if request.method == 'POST':
+        logger = logging.getLogger('degub')
+        logger.info(request.POST)
+        pais_select = request.POST.get('camposelect','')
+        pais = request.POST.get('paisselect','')
+        tenind = request.POST.get('ten_independiente','')
+        tenden = request.POST.get('ten_dependiente','')
+        regresion = request.POST.get('dato_regresion','')
+        if pais_select != '':
+            global temporal
+            temporal = pais_select
+            for i in diccionario:
+                for j in i:
+                    if j == pais_select:
+                        if not(i[j] in seleccionados):
+                            seleccionados.append(i[j])
+            return render(request,'funciones/Prediccion_muerte_pais.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':''})
+        else:
+            if  pais != '' and tenden != '' and tenind!='' and temporal != None and regresion!='':
+                grafica =analisis_p(pais,tenind,tenden,regresion,diccionario,temporal)
+            return render(request,'funciones/Prediccion_muerte_pais.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado'],'result':grafica['resultado']})
+    elif request.method == 'GET':
+        logger = logging.getLogger('degub')
+        logger.info(request.GET)
+        if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
+            return reporte_tendencia1('TICovid19_Pais.pdf',grafica['graficas'],grafica)
+        else:
+            return render(request,'funciones/Prediccion_muerte_pais.html',{'cabecera':encabezados,'graph':''})

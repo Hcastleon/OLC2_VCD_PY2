@@ -8,7 +8,7 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.metrics import mean_squared_error
 #matplotlib inline
 
-def analisis(pais,independiente,dependiente,contenido,encabezado):
+def analisis_p(pais,independiente,dependiente,prediccion,contenido,encabezado):
     data_graph = []
     #obtengo la data :)
     df =  pd.DataFrame(contenido,columns=[encabezado,independiente,dependiente])
@@ -34,11 +34,16 @@ def analisis(pais,independiente,dependiente,contenido,encabezado):
     x = datita.iloc[:,posx].values.reshape(-1,1)
     y = datita.iloc[:,posy].values
 
+    temporal = np.arange(0,len(x)+ int(prediccion))
+    x_1 = temporal.reshape((-1, 1))
+
     poly_reg=PolynomialFeatures(degree=4)
     X_poly=poly_reg.fit_transform(x)
     poly_reg.fit(X_poly,y)
     lin_reg2=LinearRegression()
     lin_reg2.fit(X_poly,y)
+
+    resultado = lin_reg2.predict(poly_reg.fit_transform([x[-1]+int(prediccion)]))
 
     #Visualising the pollynomial regression model results
     fig = plt.figure()
@@ -52,6 +57,18 @@ def analisis(pais,independiente,dependiente,contenido,encabezado):
     fig.savefig(flike)
     b64 = base64.b64encode(flike.getvalue()).decode()
     data_graph.append(b64)
+
+    #Visualising the pollynomial regression model results
+    fig1 = plt.figure()
+    plt.plot(x_1,lin_reg2.predict(poly_reg.fit_transform(x_1)),color='#676FA3')
+    plt.title('Polynomial Regression with Prediccion')
+    plt.xlabel('Time')
+    plt.ylabel('Cases')
+
+    flike = io.BytesIO()
+    fig1.savefig(flike)
+    b641 = base64.b64encode(flike.getvalue()).decode()
+    data_graph.append(b641)
     #Visualising the outlayers
 
     red_circle = dict(markerfacecolor='#FF5959', marker='o', markeredgecolor='white')
@@ -106,9 +123,8 @@ def analisis(pais,independiente,dependiente,contenido,encabezado):
 
     #Visualising the pollynomial regression model results with the best degree
     fig5 = plt.figure()
-    plt.scatter(x,y,color='#676FA3')
-    plt.plot(x,lin_reg2.predict(poly_reg.fit_transform(x)),color='#FF5959')
-    plt.title(f'Polynomial Regression with the best degree: {best_grade}')
+    plt.plot(x_1,lin_reg2.predict(poly_reg.fit_transform(x_1)),color='#FF5959')
+    plt.title(f'Polynomial Regression Prediccion with the best degree: {best_grade}')
     plt.xlabel('Time')
     plt.ylabel('Cases')
 
@@ -117,10 +133,9 @@ def analisis(pais,independiente,dependiente,contenido,encabezado):
     b645 = base64.b64encode(flike.getvalue()).decode()
     data_graph.append(b645)
 
-    return {'graficas':data_graph,'grado':best_grade,'inde':independiente,'depe':dependiente,'filtrado':pais}
+    return {'graficas':data_graph,'grado':best_grade,'inde':independiente,'depe':dependiente,'filtrado':pais,'resultado':resultado}
 
-
-def analisis2(pais,depa,independiente,dependiente,contenido,encabezado,encabezado2):
+def analisis2_p(pais,depa,independiente,dependiente,prediccion,contenido,encabezado,encabezado2):
     data_graph = []
     #obtengo la data :)
     df =  pd.DataFrame(contenido,columns=[encabezado,encabezado2,independiente,dependiente])
@@ -147,11 +162,16 @@ def analisis2(pais,depa,independiente,dependiente,contenido,encabezado,encabezad
     x = datita.iloc[:,posx].values.reshape(-1,1)
     y = datita.iloc[:,posy].values
 
+    temporal = np.arange(0,len(x)+ int(prediccion))
+    x_1 = temporal.reshape((-1, 1))
+
     poly_reg=PolynomialFeatures(degree=4)
     X_poly=poly_reg.fit_transform(x)
     poly_reg.fit(X_poly,y)
     lin_reg2=LinearRegression()
     lin_reg2.fit(X_poly,y)
+
+    resultado = lin_reg2.predict(poly_reg.fit_transform([x[-1]+int(prediccion)]))
 
     #Visualising the pollynomial regression model results
     fig = plt.figure()
@@ -165,6 +185,18 @@ def analisis2(pais,depa,independiente,dependiente,contenido,encabezado,encabezad
     fig.savefig(flike)
     b64 = base64.b64encode(flike.getvalue()).decode()
     data_graph.append(b64)
+
+    #Visualising the pollynomial regression model results
+    fig1 = plt.figure()
+    plt.plot(x_1,lin_reg2.predict(poly_reg.fit_transform(x_1)),color='#676FA3')
+    plt.title('Polynomial Regression with Prediccion')
+    plt.xlabel('Time')
+    plt.ylabel('Cases')
+
+    flike = io.BytesIO()
+    fig1.savefig(flike)
+    b641 = base64.b64encode(flike.getvalue()).decode()
+    data_graph.append(b641)
     #Visualising the outlayers
 
     red_circle = dict(markerfacecolor='#FF5959', marker='o', markeredgecolor='white')
@@ -220,9 +252,8 @@ def analisis2(pais,depa,independiente,dependiente,contenido,encabezado,encabezad
 
     #Visualising the pollynomial regression model results with the best degree
     fig5 = plt.figure()
-    plt.scatter(x,y,color='#676FA3')
-    plt.plot(x,lin_reg2.predict(poly_reg.fit_transform(x)),color='#FF5959')
-    plt.title(f'Polynomial Regression with the best degree: {best_grade}')
+    plt.plot(x_1,lin_reg2.predict(poly_reg.fit_transform(x_1)),color='#FF5959')
+    plt.title(f'Polynomial Regression Prediccion with the best degree: {best_grade}')
     plt.xlabel('Time')
     plt.ylabel('Cases')
 
@@ -231,8 +262,7 @@ def analisis2(pais,depa,independiente,dependiente,contenido,encabezado,encabezad
     b645 = base64.b64encode(flike.getvalue()).decode()
     data_graph.append(b645)
 
-    return {'graficas':data_graph,'grado':best_grade,'inde':independiente,'depe':dependiente,'filtrado':pais,'filtrado2':depa}
-
+    return {'graficas':data_graph,'grado':best_grade,'inde':independiente,'depe':dependiente,'filtrado':pais,'filtrado2':depa,'resultado':resultado}
 
 def grados(degrees, x_test, y_test):
     features = PolynomialFeatures(degree=degrees)

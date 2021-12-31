@@ -22,5 +22,11 @@ urlpatterns = [
     path('',views.home),
     path('open',views.opencsv),
     path('archivos',csrf_exempt(views.archivo)),
-    path('funcion/fun_1',views.funcion_1)
+    path('funcion/fun_1',views.funcion_1),
+    path('funcion/fun_2',views.funcion_2),
+    path('funcion/fun_3',views.funcion_3),
+    path('funcion/fun_4',views.funcion_4),
+    path('funcion/fun_5',views.funcion_5),
+    path('funcion/fun_6',views.funcion_6),
+    path('funcion/fun_7',views.funcion_7)
 ]
