@@ -6,12 +6,13 @@ import logging
 import csv
 
 from home.funciones.tendencias.Tendencia1 import analisis
+from home.reports import reporte_tendencia1
 
 archivo = None
 encabezados = []
 diccionario = []
 temporal = None
-
+grafica = None
 # Create your views here.
 def home(request):
     return render(request,'index.html')
@@ -48,6 +49,7 @@ def archivo(request):
 #funciones
 def funcion_1(request):
     seleccionados = []
+    global grafica
     if request.method == 'POST':
         logger = logging.getLogger('degub')
         logger.info(request.POST)
@@ -67,6 +69,11 @@ def funcion_1(request):
         else:
             if pais != '' and tenden != '' and tenind!='' and temporal != None:
                 grafica =analisis(pais,tenind,tenden,diccionario,temporal)
-            return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica})
-    else:
-        return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados,'graph':''})
+            return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado']})
+    elif request.method == 'GET':
+        logger = logging.getLogger('degub')
+        logger.info(request.GET)
+        if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
+            return reporte_tendencia1('TICovid19_Pais.pdf',grafica['graficas'],grafica)
+        else:
+            return render(request,'funciones/Tendencia_infeccion.html',{'cabecera':encabezados,'graph':''})

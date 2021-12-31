@@ -11,13 +11,13 @@
     <div class="row align-items-start">
       <div class="col">
         <div class="btn-group dropstart" role="group" aria-label="Button group with nested dropdown">
-        <select class="form-select" name="camposelect" aria-label="Pais">
-          <option selected>Campo</option>
-          {% for i in cabecera %}
-          <option value="{{i}}">{{i}}</option>
-          {% endfor %}
-        </select>
-        <button type="submit" class="btn btn-outline-secondary"> Aceptar </button>
+          <select class="form-select" name="camposelect" aria-label="Pais">
+            <option selected>Campo</option>
+            {% for i in cabecera %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn btn-outline-secondary"> Aceptar </button>
         </div>
       </div>
     </div>
@@ -62,40 +62,78 @@
       </div>
     </div>
   </form>
-  </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">Report</label>
-    <div class="row align-items-start">
-      <div class="col">
-        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+</div>
+<div class="mb-3">
+  <form action="" method="get" >
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Tendencia de la infección por Covid-19 en un País</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Regresion polinomial</h6>
+        <p class="card-text"> Predicción de una variable de respuesta cuantitativa {{indep}} a partir de una variable predictora cuantitativa {{dep}}, donde la relación se modela como una función polinomial de orden {{grado}}.</p>
+        <button type="submit" class="btn btn-outline-secondary" name="nombrepdf" value="nombrepdf"> Download </button>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-start">
+          <div class="col">
+            <center>
+              <img src="data:image/png;base64,{{graph.0}}" class="d-block" width="500" alt="Table describe data">
+            </center>
           </div>
-          <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-              <center>
-                <img src="data:image/png;base64,{{graph.0}}" class="d-block" width="600"  alt="Tendency">
-              </center>
-            </div>
-            <div class="carousel-item" data-bs-interval="2000">
-              <img src="data:image/png;base64,{{graph.1}}" class="d-block w-100"  alt="Outlayers">
-            </div>
-            <div class="carousel-item">
-              <img src="data:image/png;base64,{{graph.2}}" class="d-block w-100"  alt="Outlayers">
+        </div>
+        <div class="row align-items-start">
+          <div class="col">
+            <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                  aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                  aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                  aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3"
+                  aria-label="Slide 4"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="10000">
+                  <center>
+                    <img src="data:image/png;base64,{{graph.1}}" class="d-block" width="600" alt="Tendency">
+                  </center>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                  <img src="data:image/png;base64,{{graph.2}}" class="d-block w-100" alt="Outlayers">
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                  <img src="data:image/png;base64,{{graph.3}}" class="d-block w-100" alt="Heatmap and Correlation">
+                </div>
+                <div class="carousel-item">
+                  <center>
+                    <img src="data:image/png;base64,{{graph.4}}" class="d-block" width="600" alt="Degrees">
+                  </center>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+        </div>
+        <div class="row align-items-start py-3">
+          <div class="col">
+            <center>
+              <img src="data:image/png;base64,{{graph.5}}" class="d-block" width="600" alt="Tendency">
+            </center>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
+
+</div>
 {% endblock %}
