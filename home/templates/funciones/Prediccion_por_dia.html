@@ -5,13 +5,13 @@
     {% csrf_token %}
     <div class="row align-items-start">
       <div class="col">
-        <label for="exampleFormControlInput1" class="form-label">Campo a obtener el pais</label>
+        <label for="exampleFormControlInput1" class="form-label">Campo a obtener la data</label>
       </div>
     </div>
     <div class="row align-items-start">
       <div class="col">
         <div class="btn-group dropstart" role="group" aria-label="Button group with nested dropdown">
-          <select class="form-select" name="camposelect" aria-label="Pais">
+          <select class="form-select" name="camposelect" aria-label="Data">
             <option selected>Campo</option>
             {% for i in cabecera %}
             <option value="{{i}}">{{i}}</option>
@@ -27,10 +27,10 @@
     <div>
       <div class="row align-items-start">
         <div class="col">
-          <label for="exampleFormControlInput1" class="form-label">Pais</label>
-          <select class="form-select" name="paisselect" aria-label="Pais">
-            <option selected>Pais</option>
-            {% for i in pais %}
+          <label for="exampleFormControlInput1" class="form-label">Data</label>
+          <select class="form-select" name="paisselect" aria-label="Data">
+            <option selected>Campo</option>
+            {% for i in data %}
             <option value="{{i}}">{{i}}</option>
             {% endfor %}
           </select>
@@ -70,7 +70,7 @@
   <form action="" method="get" >
     <div class="card">
       <div class="card-header">
-        <h5 class="card-title">Predicción de Infectados en un País</h5>
+        <h5 class="card-title">Predicción de casos confirmados por día</h5>
         <h6 class="card-subtitle mb-2 text-muted">Regresion polinomial</h6>
         <p class="card-text"> Predicción de una variable de respuesta cuantitativa {{indep}} a partir de una variable predictora cuantitativa {{dep}}, donde la relación se modela como una función polinomial de orden {{grado}}.
             El resultado de la prediccion es: {{result}}

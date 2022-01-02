@@ -28,5 +28,10 @@ urlpatterns = [
     path('funcion/fun_4',views.funcion_4),
     path('funcion/fun_5',views.funcion_5),
     path('funcion/fun_6',views.funcion_6),
-    path('funcion/fun_7',views.funcion_7)
+    path('funcion/fun_7',views.funcion_7),
+    path('funcion/fun_8',views.funcion_8),
+    path('funcion/fun_9',views.funcion_9),
+    path('funcion/fun_10',views.funcion_10),
+    path('funcion/fun_11',views.funcion_11),
+    path('funcion/fun_12',views.funcion_12)
 ]

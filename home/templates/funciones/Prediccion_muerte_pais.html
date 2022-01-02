@@ -56,14 +56,7 @@
       </div>
       <div class="col">
         <label for="exampleFormControlInput1" size="3" class="form-label">Tiempo en el futuro</label>
-        <select class="form-select" name="dato_regresion" aria-label="Pais">
-            <option selected>Campo</option>
-            {% with ''|center:100 as range %}
-            {% for _ in range %}
-             <option value="{{ forloop.counter}}">{{ forloop.counter}}</option>
-            {% endfor %}
-            {% endwith %}
-        </select>
+        <input class="form-control" name="dato_regresion" type="text">
       </div>
     </div>
       <div class="row align-items-start">
