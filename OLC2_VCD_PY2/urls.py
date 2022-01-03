@@ -33,5 +33,14 @@ urlpatterns = [
     path('funcion/fun_9',views.funcion_9),
     path('funcion/fun_10',views.funcion_10),
     path('funcion/fun_11',views.funcion_11),
-    path('funcion/fun_12',views.funcion_12)
+    path('funcion/fun_12',views.funcion_12),
+    path('funcion/fun_13',views.funcion_13),
+    path('funcion/fun_14',views.funcion_14),
+    path('funcion/fun_15',views.funcion_15),
+    path('funcion/fun_16',views.funcion_16),
+    path('funcion/fun_17',views.funcion_17),
+    path('funcion/fun_18',views.funcion_18),
+    path('funcion/fun_19',views.funcion_19),
+    path('funcion/fun_20',views.funcion_20),
+    path('funcion/fun_21',views.funcion_21)
 ]

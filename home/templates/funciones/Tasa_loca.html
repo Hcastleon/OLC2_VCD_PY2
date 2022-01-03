@@ -1,0 +1,120 @@
+{% extends 'index.html'%}
+{% block funcion %}
+<div class="mb-3">
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row align-items-start">
+      <div class="col">
+        <label for="exampleFormControlInput1" class="form-label">Campos a obtener la data</label>
+      </div>
+    </div>
+    <div class="row align-items-start">
+      <div class="col">
+        <div class="btn-group dropstart" role="group" aria-label="Button group with nested dropdown">
+          <select class="form-select" name="camposelect" aria-label="Continentes">
+            <option selected>Data</option>
+            {% for i in cabecera %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn btn-outline-secondary"> Aceptar </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+      <div class="row align-items-start">
+        <div class="col">
+          <label for="exampleFormControlInput1" class="form-label">Data</label>
+          <select class="form-select" name="paisselect" aria-label="Pais">
+            <option selected>Campo</option>
+            {% for i in pais %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col">
+          <label for="exampleFormControlInput1" class="form-label">Independiente</label>
+          <select class="form-select" name="ten_independiente" aria-label="Pais">
+            <option selected>Campo</option>
+            {% for i in cabecera %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col">
+          <label for="exampleFormControlInput1" class="form-label">Casos acumulados</label>
+          <select class="form-select" name="ten_dependiente" aria-label="Pais">
+            <option selected>Campo</option>
+            {% for i in cabecera %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col">
+            <label for="exampleFormControlInput1" class="form-label">Casos </label>
+            <select class="form-select" name="ten_dependiente2" aria-label="Pais">
+              <option selected>Campo</option>
+              {% for i in cabecera %}
+              <option value="{{i}}">{{i}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        <div class="col">
+            <label for="exampleFormControlInput1" class="form-label">Muertes</label>
+            <select class="form-select" name="ten_dependiente3" aria-label="Depa">
+              <option selected>Campo</option>
+              {% for i in cabecera %}
+              <option value="{{i}}">{{i}}</option>
+              {% endfor %}
+            </select>
+          </div>
+      </div>
+      <div class="row align-items-start">
+        <div class="col py-3">
+          <button type="submit" class="btn btn-outline-secondary"> Aceptar </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="mb-3">
+  <form action="" method="get" >
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Tasa de crecimiento de casos de COVID-19 en relación con nuevos casos diarios y tasa de muerte por COVID-19</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Regresion polinomial</h6>
+        <p class="card-text"> Tasa de una variable de respuesta cuantitativa {{indep}} a partir de una variable predictora cuantitativa {{dep}} y que lleva relacion con {{dep2}} y {{dep3}}, donde la relación se modela como una función polinomial de orden {{grado}},{{grado2}} y de {{grado3}}.</p>
+        <button type="submit" class="btn btn-outline-secondary" name="nombrepdf" value="nombrepdf"> Download </button>
+      </div>
+      <div class="card-body">
+        <div class="row align-items-start">
+          <div class="col">
+            <center>
+              <img src="data:image/png;base64,{{graph.0}}" class="d-block" width="500" alt="Table describe data">
+            </center>
+          </div>
+        </div>
+        <div class="row align-items-start py-3">
+          <div class="col">
+            <center>
+              <img src="data:image/png;base64,{{graph.1}}" class="d-block" width="600" alt="Tendency">
+            </center>
+          </div>
+        </div>
+        <div class="row align-items-start py-3">
+          <div class="col">
+            <center>
+              <img src="data:image/png;base64,{{graph.2}}" class="d-block" width="600" alt="Tendency">
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+{% endblock %}

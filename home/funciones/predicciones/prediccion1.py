@@ -12,6 +12,8 @@ def analisis_p(pais,independiente,dependiente,prediccion,contenido,encabezado):
     data_graph = []
     #obtengo la data :)
     df =  pd.DataFrame(contenido,columns=[encabezado,independiente,dependiente])
+    df = df.replace('',np.nan, regex=True)
+    df = df.dropna()
     #obtengo las rows que quiero (filtro por pais)
     datita = df.loc[df[encabezado] == pais]
 
@@ -139,6 +141,7 @@ def analisis2_p(pais,depa,independiente,dependiente,prediccion,contenido,encabez
     data_graph = []
     #obtengo la data :)
     df =  pd.DataFrame(contenido,columns=[encabezado,encabezado2,independiente,dependiente])
+    df = df.dropna()
     #obtengo las rows que quiero (filtro por pais)
     datita = df.loc[df[encabezado] == pais]
     datita = datita.loc[datita[encabezado2] == depa]
@@ -268,6 +271,8 @@ def analisis_year_p(pais,independiente,dependiente,contenido,encabezado):
     data_graph = []
     #obtengo la data :)
     df =  pd.DataFrame(contenido,columns=[encabezado,independiente,dependiente])
+    df = df.replace('',np.nan, regex=True)
+    df = df.dropna()
     #obtengo las rows que quiero (filtro por pais)
     datita = df.loc[df[encabezado] == pais]
     years = pd.DatetimeIndex(datita[independiente]).year

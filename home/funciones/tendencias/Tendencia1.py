@@ -12,8 +12,12 @@ def analisis(pais,independiente,dependiente,contenido,encabezado):
     data_graph = []
     #obtengo la data :)
     df =  pd.DataFrame(contenido,columns=[encabezado,independiente,dependiente])
+    df = df.replace('',np.nan, regex=True)
+    df = df.dropna()
     #obtengo las rows que quiero (filtro por pais)
     datita = df.loc[df[encabezado] == pais]
+    if len(datita.values) == 0:
+        return {'graficas':data_graph,'grado':0,'inde':independiente,'depe':dependiente,'filtrado':pais}
 
     tablita =datita.describe()
     fig0,ax = plt.subplots(1,1)
@@ -124,6 +128,8 @@ def analisis2(pais,depa,independiente,dependiente,contenido,encabezado,encabezad
     data_graph = []
     #obtengo la data :)
     df =  pd.DataFrame(contenido,columns=[encabezado,encabezado2,independiente,dependiente])
+    df = df.replace('',np.nan, regex=True)
+    df = df.dropna()
     #obtengo las rows que quiero (filtro por pais)
     datita = df.loc[df[encabezado] == pais]
     datita = datita.loc[datita[encabezado2] == depa]
