@@ -268,6 +268,20 @@ def analisis_tasas_locas(continente,independiente,dependiente,dependiente2,depen
 
     return {'graficas':data_graph,'grado':best_grade,'grado2':best_grade2,'grado3':best_grade3,'inde':independiente,'depe':dependiente,'depe2':dependiente2,'depe3':dependiente3}
 
+# def regresar_tasa(pais,independiente,dependiente,contenido,encabezado):
+#     df =  pd.DataFrame(contenido,columns=[encabezado,independiente,dependiente])
+#     df = df.replace('',np.nan, regex=True)
+#     df = df.dropna()
+#     #obtengo las rows que quiero (filtro por pais)
+#     datita = df.loc[df[encabezado] == pais]
+#     if len(datita.values) == 0:
+#         return 0
+
+#     datita[independiente] = datita[independiente].astype('category').cat.codes
+#     datita[dependiente] = pd.to_numeric(datita[dependiente])
+#     tasa = ((max(datita[dependiente]) - min(datita[dependiente]))/ min(datita[dependiente]))*100
+#     return tasa
+
 
 def grados(degrees, x_test, y_test):
     features = PolynomialFeatures(degree=degrees)

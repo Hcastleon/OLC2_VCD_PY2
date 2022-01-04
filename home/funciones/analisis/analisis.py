@@ -311,7 +311,7 @@ def analisis_a_varios(lista_variables,independiente,dependiente,contenido,encabe
     b645 = base64.b64encode(flike.getvalue()).decode()
     data_graph.append(b645)
 
-    return {'graficas':data_graph,'grado':best_grade,'inde':independiente,'depe':dependiente}
+    return {'graficas':data_graph,'grado':best_grade,'inde':independiente,'depe':dependiente, 'pais':lista_variables}
 
 
 

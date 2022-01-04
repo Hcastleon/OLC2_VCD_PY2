@@ -141,6 +141,7 @@ def analisis2_p(pais,depa,independiente,dependiente,prediccion,contenido,encabez
     data_graph = []
     #obtengo la data :)
     df =  pd.DataFrame(contenido,columns=[encabezado,encabezado2,independiente,dependiente])
+    df = df.replace('',np.nan, regex=True)
     df = df.dropna()
     #obtengo las rows que quiero (filtro por pais)
     datita = df.loc[df[encabezado] == pais]

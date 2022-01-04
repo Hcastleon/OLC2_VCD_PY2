@@ -46,7 +46,7 @@
           </select>
         </div>
         <div class="col">
-          <label for="exampleFormControlInput1" class="form-label">Dependiente</label>
+          <label for="exampleFormControlInput1" class="form-label">Dependiente(acumulada)</label>
           <select class="form-select" name="ten_dependiente" aria-label="Pais">
             <option selected>Campo</option>
             {% for i in cabecera %}
@@ -69,7 +69,9 @@
       <div class="card-header">
         <h5 class="card-title">Tasa de mortalidad por coronavirus (COVID-19) en un país</h5>
         <h6 class="card-subtitle mb-2 text-muted">Regresion polinomial</h6>
-        <p class="card-text"> Tasa  de mortalidad de una variable de respuesta cuantitativa {{indep}} a partir de una variable predictora cuantitativa {{dep}}, donde la relación se modela como una función polinomial de orden {{grado}}.</p>
+        <p class="card-text"> Tasa  de mortalidad de una variable de respuesta cuantitativa {{indep}} a partir de una variable predictora cuantitativa {{dep}}, donde la relación se modela como una función polinomial de orden {{grado}}.
+          Con un resultado de {{tasa}}.
+        </p>
         <button type="submit" class="btn btn-outline-secondary" name="nombrepdf" value="nombrepdf"> Download </button>
       </div>
       <div class="card-body">
