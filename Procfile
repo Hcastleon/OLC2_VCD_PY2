@@ -1,1 +1,0 @@
-web: gunicorn OLC2_VCD_PY2.wsgi
