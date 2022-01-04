@@ -181,6 +181,10 @@ def reporte_prediccion1(titulo,nombre,graficas, datos):
             frame1_1, frame2_1]),
     ])
 
+    doc.build(story)
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=nombre)
+
 def reporte_prediccion2(titulo,nombre,graficas,graficas2, datos,datos2):
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
