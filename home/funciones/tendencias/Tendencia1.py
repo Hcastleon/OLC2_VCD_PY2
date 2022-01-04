@@ -31,6 +31,7 @@ def analisis(pais,independiente,dependiente,contenido,encabezado):
     b640 = base64.b64encode(flike.getvalue()).decode()
     data_graph.append(b640)
 
+    fechas = pd.DatetimeIndex(datita[independiente])
     datita[independiente] = datita[independiente].astype('category').cat.codes
     datita[dependiente] = pd.to_numeric(datita[dependiente])
     posx = datita.columns.get_loc(independiente)
@@ -46,11 +47,13 @@ def analisis(pais,independiente,dependiente,contenido,encabezado):
 
     #Visualising the pollynomial regression model results
     fig = plt.figure()
-    plt.scatter(x,y,color='#FF5959')
-    plt.plot(x,lin_reg2.predict(poly_reg.fit_transform(x)),color='#676FA3')
+    plt.scatter(fechas,y,color='#FF5959')
+    plt.plot(fechas,lin_reg2.predict(poly_reg.fit_transform(x)),color='#676FA3')
     plt.title('Polynomial Regression')
     plt.xlabel('Time')
     plt.ylabel('Cases')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
 
     flike = io.BytesIO()
     fig.savefig(flike)
@@ -110,11 +113,13 @@ def analisis(pais,independiente,dependiente,contenido,encabezado):
 
     #Visualising the pollynomial regression model results with the best degree
     fig5 = plt.figure()
-    plt.scatter(x,y,color='#676FA3')
-    plt.plot(x,lin_reg2.predict(poly_reg.fit_transform(x)),color='#FF5959')
+    plt.scatter(fechas,y,color='#676FA3')
+    plt.plot(fechas,lin_reg2.predict(poly_reg.fit_transform(x)),color='#FF5959')
     plt.title(f'Polynomial Regression with the best degree: {best_grade}')
     plt.xlabel('Time')
     plt.ylabel('Cases')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
 
     flike = io.BytesIO()
     fig5.savefig(flike)
@@ -146,6 +151,7 @@ def analisis2(pais,depa,independiente,dependiente,contenido,encabezado,encabezad
     b640 = base64.b64encode(flike.getvalue()).decode()
     data_graph.append(b640)
 
+    fechas = pd.DatetimeIndex(datita[independiente])
     datita[independiente] = datita[independiente].astype('category').cat.codes
     datita[dependiente] = pd.to_numeric(datita[dependiente])
     posx = datita.columns.get_loc(independiente)
@@ -161,11 +167,13 @@ def analisis2(pais,depa,independiente,dependiente,contenido,encabezado,encabezad
 
     #Visualising the pollynomial regression model results
     fig = plt.figure()
-    plt.scatter(x,y,color='#FF5959')
-    plt.plot(x,lin_reg2.predict(poly_reg.fit_transform(x)),color='#676FA3')
+    plt.scatter(fechas,y,color='#FF5959')
+    plt.plot(fechas,lin_reg2.predict(poly_reg.fit_transform(x)),color='#676FA3')
     plt.title('Polynomial Regression')
     plt.xlabel('Time')
     plt.ylabel('Cases')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
 
     flike = io.BytesIO()
     fig.savefig(flike)
@@ -226,11 +234,13 @@ def analisis2(pais,depa,independiente,dependiente,contenido,encabezado,encabezad
 
     #Visualising the pollynomial regression model results with the best degree
     fig5 = plt.figure()
-    plt.scatter(x,y,color='#676FA3')
-    plt.plot(x,lin_reg2.predict(poly_reg.fit_transform(x)),color='#FF5959')
+    plt.scatter(fechas,y,color='#676FA3')
+    plt.plot(fechas,lin_reg2.predict(poly_reg.fit_transform(x)),color='#FF5959')
     plt.title(f'Polynomial Regression with the best degree: {best_grade}')
     plt.xlabel('Time')
     plt.ylabel('Cases')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
 
     flike = io.BytesIO()
     fig5.savefig(flike)

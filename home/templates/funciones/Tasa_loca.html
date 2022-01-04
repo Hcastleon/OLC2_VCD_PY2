@@ -46,7 +46,7 @@
           </select>
         </div>
         <div class="col">
-          <label for="exampleFormControlInput1" class="form-label">Casos acumulados</label>
+          <label for="exampleFormControlInput1" class="form-label">Casos_nuevos</label>
           <select class="form-select" name="ten_dependiente" aria-label="Pais">
             <option selected>Campo</option>
             {% for i in cabecera %}
@@ -55,23 +55,14 @@
           </select>
         </div>
         <div class="col">
-            <label for="exampleFormControlInput1" class="form-label">Casos </label>
+            <label for="exampleFormControlInput1" class="form-label">Muertas_nuevas </label>
             <select class="form-select" name="ten_dependiente2" aria-label="Pais">
               <option selected>Campo</option>
               {% for i in cabecera %}
               <option value="{{i}}">{{i}}</option>
               {% endfor %}
             </select>
-          </div>
-        <div class="col">
-            <label for="exampleFormControlInput1" class="form-label">Muertes</label>
-            <select class="form-select" name="ten_dependiente3" aria-label="Depa">
-              <option selected>Campo</option>
-              {% for i in cabecera %}
-              <option value="{{i}}">{{i}}</option>
-              {% endfor %}
-            </select>
-          </div>
+        </div>
       </div>
       <div class="row align-items-start">
         <div class="col py-3">
@@ -86,8 +77,8 @@
     <div class="card border-primary mb-3">
       <div class="card-header">
         <h5 class="card-title">Tasa de crecimiento de casos de COVID-19 en relación con nuevos casos diarios y tasa de muerte por COVID-19</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Regresion polinomial</h6>
-        <p class="card-text"> Tasa de una variable de respuesta cuantitativa {{indep}} a partir de una variable predictora cuantitativa {{dep}} y que lleva relacion con {{dep2}} y {{dep3}}, donde la relación se modela como una función polinomial de orden {{grado}},{{grado2}} y de {{grado3}}.</p>
+        <h6 class="card-subtitle mb-2 text-muted">Tasa de casos</h6>
+        <p class="card-text">Tasa de una variable de respuesta cuantitativa {{indep}} a partir de una variable predictora cuantitativa {{dep2}}, {{dep3}}. </p>
         <button type="submit" class="btn btn-outline-secondary" name="nombrepdf" value="nombrepdf"> Download </button>
       </div>
       <div class="card-body">
@@ -98,23 +89,8 @@
             </center>
           </div>
         </div>
-        <div class="row align-items-start py-3">
-          <div class="col">
-            <center>
-              <img src="data:image/png;base64,{{graph.1}}" class="d-block" width="600" alt="Tendency">
-            </center>
-          </div>
-        </div>
-        <div class="row align-items-start py-3">
-          <div class="col">
-            <center>
-              <img src="data:image/png;base64,{{graph.2}}" class="d-block" width="600" alt="Tendency">
-            </center>
-          </div>
-        </div>
       </div>
     </div>
   </form>
-
 </div>
 {% endblock %}

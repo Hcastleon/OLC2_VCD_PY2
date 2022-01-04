@@ -10,7 +10,7 @@ import pandas as pd
 from home.funciones.analisis.analisis import analisis_a, analisis_a_varios
 from home.funciones.muertes.muertes import analisis_cantidad, analisis_cantidad_casos, analisis_cantidad_muertes, analisis_cantidad_regiones, analisis_clasificacion, analisis_factores
 from home.funciones.predicciones.prediccion1 import analisis2_p, analisis_p, analisis_year_p
-from home.funciones.tasa.tasas import analisis_tasas, analisis_tasas_locas
+from home.funciones.tasa.tasas import analisis_tasas, analisis_tasas_locas, tasa_muerte
 
 from home.funciones.tendencias.Tendencia1 import analisis, analisis2
 from home.reports import reporte_analisis1, reporte_analisis2, reporte_comparacion, reporte_muertes1, reporte_muertes2, reporte_prediccion1, reporte_prediccion2, reporte_tasas1, reporte_tasas2, reporte_tendencia1
@@ -268,32 +268,24 @@ def funcion_6(request):
     if request.method == 'POST':
         logger = logging.getLogger('degub')
         logger.info(request.POST)
-        pais_select = request.POST.get('camposelect1','')
         depa_select = request.POST.get('camposelect2','')
-        pais = request.POST.get('paisselect','')
         depa = request.POST.get('depaselect','')
         tenind = request.POST.get('ten_independiente','')
         tenden = request.POST.get('ten_dependiente','')
         regresion = request.POST.get('dato_regresion','')
-        if pais_select != '' and depa_select != '' :
+        if  depa_select != '' :
             global temporal, temporal2
-            temporal = pais_select
             temporal2 = depa_select
-            for i in diccionario:
-                for j in i:
-                    if j == pais_select:
-                        if not(i[j] in seleccionados):
-                            seleccionados.append(i[j])
             for i in diccionario:
                 for j in i:
                     if j == depa_select:
                         if not(i[j] in seleccionados2):
                             seleccionados2.append(i[j])
-            return render(request,'funciones/Prediccion_muertes_depa.html',{'cabecera':encabezados, 'pais': seleccionados, 'depa': seleccionados2,'graph':''})
+            return render(request,'funciones/Prediccion_muertes_depa.html',{'cabecera':encabezados, 'depa': seleccionados2,'graph':''})
         else:
-            if depa != '' and pais != '' and tenden != '' and tenind!='' and temporal != None and regresion!='' and temporal2 != None:
+            if depa != '' and tenden != '' and tenind!='' and regresion!='' and temporal2 != None:
                 try:
-                    grafica =analisis2_p(pais,depa,tenind,tenden,regresion,diccionario,temporal,temporal2)
+                    grafica =analisis_p(depa,tenind,tenden,regresion,diccionario,temporal2)
                     return render(request,'funciones/Prediccion_muertes_depa.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado'],'result':grafica['resultado']})
                 except Exception as inst:
                         messages.error(request, f"somthing went wrong: {inst}")
@@ -524,7 +516,7 @@ def funcion_12(request):
             if  pais !='' and tenden != '' and tenind!='' and pais2!='' and temporal!=None:
                 try:
                     grafica =analisis_a(pais,pais2,tenind,tenden,diccionario,temporal)
-                    return render(request,'funciones/Comp_vacuna.html',{'cabecera':encabezados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado'],'grado2':grafica['grado2']})
+                    return render(request,'funciones/Comp_vacuna.html',{'cabecera':encabezados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado']})
                 except Exception as inst:
                     messages.error(request, f"somthing went wrong: {inst}")
             else:
@@ -534,7 +526,7 @@ def funcion_12(request):
         logger = logging.getLogger('degub')
         logger.info(request.GET)
         if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
-            return reporte_analisis1('Ánalisis Comparativo de Vacunación entre 2 paises','AnVac_2Pais.pdf',grafica['graficas'],grafica)
+            return reporte_analisis2('Ánalisis Comparativo de Vacunación entre 2 paises','AnVac_2Pais.pdf',grafica['graficas'],grafica)
         else:
             return render(request,'funciones/Comp_vacuna.html',{'cabecera':encabezados,'graph':''})
 
@@ -716,8 +708,8 @@ def funcion_17(request):
             if  pais !='' and tenden != '' and tenind!='' and temporal!=None:
                 try:
                     #dato_tasa = regresar_tasa(pais,tenind,tenden,diccionario,temporal)
-                    grafica =analisis(pais,tenind,tenden,diccionario,temporal)
-                    return render(request,'funciones/Tasa_muertes.html',{'cabecera':encabezados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'grado':grafica['grado']})
+                    grafica =tasa_muerte(pais,tenind,tenden,diccionario,temporal)
+                    return render(request,'funciones/Tasa_muertes.html',{'cabecera':encabezados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden})
                 except Exception as inst:
                     messages.error(request, f"somthing went wrong: {inst}")
             else:
@@ -727,7 +719,7 @@ def funcion_17(request):
         logger = logging.getLogger('degub')
         logger.info(request.GET)
         if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
-            return reporte_tendencia1('Tasa de mortalidad por coronavirus (COVID-19) en un país','TasaMort_Pais.pdf',grafica['graficas'],grafica)
+            return reporte_muertes2('Tasa de mortalidad por coronavirus (COVID-19) en un país','TasaMort_Pais.pdf',grafica['graficas'],grafica)
         else:
             return render(request,'funciones/Tasa_muertes.html',{'cabecera':encabezados,'graph':''})
 
@@ -854,7 +846,6 @@ def funcion_21(request):
         tenind = request.POST.get('ten_independiente','')
         tenden = request.POST.get('ten_dependiente','')
         tenden2 = request.POST.get('ten_dependiente2','')
-        tenden3 = request.POST.get('ten_dependiente3','')
         if pais_select != '':
             global temporal
             temporal = pais_select
@@ -865,10 +856,10 @@ def funcion_21(request):
                             seleccionados.append(i[j])
             return render(request,'funciones/Tasa_loca.html',{'cabecera':encabezados, 'pais': seleccionados,'graph':''})
         else:
-            if  pais !='' and tenden != '' and tenind!='' and tenden2!='' and tenden3!='' and temporal!=None:
+            if  pais !='' and tenden != '' and tenind!='' and tenden2!=''  and temporal!=None:
                 try:
-                    grafica =analisis_tasas_locas(pais,tenind,tenden,tenden2,tenden3,diccionario,temporal)
-                    return render(request,'funciones/Tasa_loca.html',{'cabecera':encabezados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'dep2':tenden2,'dep3':tenden3,'grado':grafica['grado'],'grado2':grafica['grado2'],'grado3':grafica['grado3']})
+                    grafica =analisis_tasas_locas(pais,tenind,tenden,tenden2,diccionario,temporal)
+                    return render(request,'funciones/Tasa_loca.html',{'cabecera':encabezados,'graph':grafica['graficas'],'indep':tenind,'dep':tenden,'dep2':tenden2})
                 except Exception as inst:
                     messages.error(request, f"somthing went wrong: {inst}")
             else:
@@ -878,7 +869,7 @@ def funcion_21(request):
         logger = logging.getLogger('degub')
         logger.info(request.GET)
         if grafica != None and request.GET.get('nombrepdf') == 'nombrepdf':
-            return reporte_tasas2('Tasa de crecimiento de casos de COVID-19 en relación con nuevos casos diarios y tasa de muerte por COVID-19','Tasas_locas.pdf',grafica['graficas'],grafica)
+            return reporte_muertes1('Tasa de crecimiento de casos de COVID-19 en relación con nuevos casos diarios y tasa de muerte por COVID-19','Tasas_locas.pdf',grafica['graficas'],grafica)
         else:
             return render(request,'funciones/Tasa_loca.html',{'cabecera':encabezados,'graph':''})
 

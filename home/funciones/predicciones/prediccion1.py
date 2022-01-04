@@ -45,8 +45,6 @@ def analisis_p(pais,independiente,dependiente,prediccion,contenido,encabezado):
     lin_reg2=LinearRegression()
     lin_reg2.fit(X_poly,y)
 
-    resultado = lin_reg2.predict(poly_reg.fit_transform([x[-1]+int(prediccion)]))
-
     #Visualising the pollynomial regression model results
     fig = plt.figure()
     plt.scatter(x,y,color='#FF5959')
@@ -123,6 +121,7 @@ def analisis_p(pais,independiente,dependiente,prediccion,contenido,encabezado):
     lin_reg2=LinearRegression()
     lin_reg2.fit(X_poly,y)
 
+    resultado = lin_reg2.predict(poly_reg.fit_transform([x[-1]+int(prediccion)]))
     #Visualising the pollynomial regression model results with the best degree
     fig5 = plt.figure()
     plt.plot(x_1,lin_reg2.predict(poly_reg.fit_transform(x_1)),color='#FF5959')
@@ -141,7 +140,6 @@ def analisis2_p(pais,depa,independiente,dependiente,prediccion,contenido,encabez
     data_graph = []
     #obtengo la data :)
     df =  pd.DataFrame(contenido,columns=[encabezado,encabezado2,independiente,dependiente])
-    df = df.replace('',np.nan, regex=True)
     df = df.dropna()
     #obtengo las rows que quiero (filtro por pais)
     datita = df.loc[df[encabezado] == pais]
@@ -174,8 +172,6 @@ def analisis2_p(pais,depa,independiente,dependiente,prediccion,contenido,encabez
     poly_reg.fit(X_poly,y)
     lin_reg2=LinearRegression()
     lin_reg2.fit(X_poly,y)
-
-    resultado = lin_reg2.predict(poly_reg.fit_transform([x[-1]+int(prediccion)]))
 
     #Visualising the pollynomial regression model results
     fig = plt.figure()
@@ -254,12 +250,14 @@ def analisis2_p(pais,depa,independiente,dependiente,prediccion,contenido,encabez
     lin_reg2=LinearRegression()
     lin_reg2.fit(X_poly,y)
 
+    resultado = lin_reg2.predict(poly_reg.fit_transform([x[-1]+int(prediccion)]))
     #Visualising the pollynomial regression model results with the best degree
     fig5 = plt.figure()
     plt.plot(x_1,lin_reg2.predict(poly_reg.fit_transform(x_1)),color='#FF5959')
     plt.title(f'Polynomial Regression Prediccion with the best degree: {best_grade}')
     plt.xlabel('Time')
     plt.ylabel('Cases')
+
 
     flike = io.BytesIO()
     fig5.savefig(flike)
@@ -305,8 +303,6 @@ def analisis_year_p(pais,independiente,dependiente,contenido,encabezado):
     poly_reg.fit(X_poly,y)
     lin_reg2=LinearRegression()
     lin_reg2.fit(X_poly,y)
-
-    resultado = lin_reg2.predict(poly_reg.fit_transform([prediccion]))
 
     #Visualising the pollynomial regression model results
     fig = plt.figure()
@@ -384,6 +380,7 @@ def analisis_year_p(pais,independiente,dependiente,contenido,encabezado):
     lin_reg2=LinearRegression()
     lin_reg2.fit(X_poly,y)
 
+    resultado = lin_reg2.predict(poly_reg.fit_transform([x[-1]+int(prediccion)]))
     #Visualising the pollynomial regression model results with the best degree
     fig5 = plt.figure()
     plt.plot(x,lin_reg2.predict(poly_reg.fit_transform(x)),color='#FF5959')

@@ -78,27 +78,13 @@
                 </h5>
                 <h6 class="card-subtitle mb-2 text-muted">Regresion polinomial</h6>
                 <p class="card-text"> Comparacion de las variables de respuestas cuantitativa {{indep}} a partir de una
-                    variable predictora cuantitativa {{dep}}, donde la relación se modela como una
-                    función polinomial de orden {{grado}} y la otra {{grado2}}.
+                    variable predictora cuantitativa {{dep}} a partir de dos paises, donde la relación se modela como una
+                    función polinomial de orden {{grado}}.
                 </p>
                 <button type="submit" class="btn btn-outline-secondary" name="nombrepdf" value="nombrepdf"> Download
                 </button>
             </div>
             <div class="card-body">
-                <div class="row align-items-start">
-                    <div class="col">
-                        <center>
-                            <img src="data:image/png;base64,{{graph.0}}" class="d-block" width="500"
-                                alt="Table describe data">
-                        </center>
-                    </div>
-                    <div class="col">
-                        <center>
-                            <img src="data:image/png;base64,{{graph.1}}" class="d-block" width="500"
-                                alt="Table describe data">
-                        </center>
-                    </div>
-                </div>
                 <div class="row align-items-start">
                     <div class="col">
                         <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -107,55 +93,18 @@
                                     class="active" aria-current="true" aria-label="Slide 1"></button>
                                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
                                     aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                                    aria-label="Slide 3"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3"
-                                    aria-label="Slide 4"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4"
-                                    aria-label="Slide 5"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5"
-                                    aria-label="Slide 6"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="6"
-                                    aria-label="Slide 7"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="7"
-                                    aria-label="Slide 8"></button>
                             </div>
                             <div class="carousel-inner">
                                 <div class="carousel-item active" data-bs-interval="10000">
                                     <center>
-                                        <img src="data:image/png;base64,{{graph.2}}" class="d-block" width="600"
+                                        <img src="data:image/png;base64,{{graph.0}}" class="d-block" width="600"
                                             alt="Tendency">
                                     </center>
                                 </div>
                                 <div class="carousel-item" data-bs-interval="10000">
                                     <center>
-                                        <img src="data:image/png;base64,{{graph.3}}" class="d-block" width="600"
+                                        <img src="data:image/png;base64,{{graph.1}}" class="d-block" width="600"
                                             alt="Tendency">
-                                    </center>
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <center>
-                                        <img src="data:image/png;base64,{{graph.4}}" class="d-block" width="600" alt="Compare">
-                                    </center>
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="data:image/png;base64,{{graph.5}}" class="d-block w-100" alt="Outlayers">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="data:image/png;base64,{{graph.6}}" class="d-block w-100" alt="Outlayers">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="data:image/png;base64,{{graph.7}}" class="d-block w-100"
-                                        alt="Heatmap and Correlation">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="2000">
-                                    <img src="data:image/png;base64,{{graph.8}}" class="d-block w-100"
-                                        alt="Heatmap and Correlation">
-                                </div>
-                                <div class="carousel-item">
-                                    <center>
-                                        <img src="data:image/png;base64,{{graph.9}}" class="d-block" width="600"
-                                            alt="Degrees">
                                     </center>
                                 </div>
                             </div>
@@ -175,7 +124,7 @@
                 <div class="row align-items-start py-3">
                     <div class="col">
                         <center>
-                            <img src="data:image/png;base64,{{graph.10}}" class="d-block" width="600" alt="Compare">
+                            <img src="data:image/png;base64,{{graph.2}}" class="d-block" width="600" alt="Compare">
                         </center>
                     </div>
                 </div>
